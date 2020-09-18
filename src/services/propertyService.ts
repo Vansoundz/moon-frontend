@@ -58,4 +58,16 @@ const like = async ({ id }: { id?: string }) => {
   return resp;
 };
 
-export { createProperty, getProperties, getProperty, like };
+const search = async ({ query }: { query: string }) => {
+  try {
+    let resp = await (
+      await Axios.post(`/api/properties/search`, { search: query })
+    ).data;
+    if (resp.properties) return resp.properties;
+    return [];
+  } catch (error) {
+    return [];
+  }
+};
+
+export { createProperty, getProperties, getProperty, like, search };

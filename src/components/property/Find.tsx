@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useMutation } from "react-query";
+import { Link } from "react-router-dom";
+import Property from "../../models/PropertyModel";
+import { search } from "../../services/propertyService";
 
 const Find = () => {
+  const [searchProperty, { data }] = useMutation(search);
+  const [query, setQuery] = useState("");
+  const [properties, setProperties] = useState<Property[]>([]);
+  useEffect(() => {
+    if (data) {
+      setProperties(data);
+    }
+  }, [data]);
   return (
     <div className="find">
-      <div>
+      <div className="find-wrapper">
         <h4>Find your place</h4>
         <div className="form-item">
           <span
@@ -13,7 +25,30 @@ const Find = () => {
             search
           </span>
           <button className="srch-btn">Search</button>
-          <input type="search" />
+          <input
+            type="search"
+            onChange={(e) => {
+              setQuery(e.target.value);
+              if (e.target.value.length > 0) {
+                searchProperty({ query });
+              }
+            }}
+          />
+        </div>
+        <div>
+          {properties && properties.length > 0 && (
+            <div className="suggestions">
+              {properties.map((property, i) => {
+                return (
+                  <div className="suggestion" key={i}>
+                    <Link to={`/property/${property._id}`}>
+                      {property.title}
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

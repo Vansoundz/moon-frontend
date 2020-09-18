@@ -1,6 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useContext, useEffect } from "react";
+import { useMutation, useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { authContext } from "../../contexts/authContext";
 import PropertyModel from "../../models/PropertyModel";
+import { getProperties, like } from "../../services/propertyService";
 
 interface IProps {
   property: PropertyModel;
@@ -16,7 +19,21 @@ const Property: FC<IProps> = ({ property }) => {
     _id,
     bathrooms,
     bedrooms,
+    likes,
   } = property;
+
+  const {
+    auth: { user },
+  } = useContext(authContext);
+  const [likeProperty, { data: likeData }] = useMutation(like);
+  const { refetch } = useQuery("get properties", getProperties);
+
+  useEffect(() => {
+    if (likeData && likeData.msg === "Success") {
+      refetch();
+    }
+    // eslint-disable-next-line
+  }, [likeData]);
 
   return (
     <div className="property">
@@ -27,11 +44,27 @@ const Property: FC<IProps> = ({ property }) => {
             background: `url(/api/files/${image})`,
           }}
         >
-          <div style={{ padding: `8px` }}>
-            <span>
-              <span className="material-icons">bookmark</span>
-            </span>
-          </div>
+          {user && (
+            <div
+              style={{
+                padding: `8px`,
+                background: `#0000005f`,
+                color: `#fff`,
+                height: `40px`,
+              }}
+              onClick={async () => {
+                await likeProperty({ id: _id });
+              }}
+            >
+              <span>
+                <span className="material-icons">
+                  {likes?.includes(user._id || "")
+                    ? "bookmark"
+                    : "bookmark_border"}
+                </span>
+              </span>
+            </div>
+          )}
         </div>
       </div>
       <div className="pdetails">
@@ -56,11 +89,21 @@ const Property: FC<IProps> = ({ property }) => {
         <div style={{ display: "flex" }}>
           <span style={{ display: "flex" }}>
             <span>{bedrooms}</span>
-            <div className="material-icons">hotel</div>
+            <div
+              style={{ color: `#666`, fontSize: "20px", marginLeft: "4px" }}
+              className="material-icons"
+            >
+              hotel
+            </div>
           </span>
           <span style={{ display: "flex", marginLeft: "16px" }}>
             <span>{bathrooms}</span>
-            <div className="material-icons">bathtub</div>
+            <div
+              style={{ color: `#666`, fontSize: "20px", marginLeft: "4px" }}
+              className="material-icons"
+            >
+              bathtub
+            </div>
           </span>
         </div>
         <div>Ksh {price}</div>

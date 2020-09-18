@@ -83,3 +83,25 @@
 .error {
   font-size: 11px;
 }
+
+/* Find */
+.find-wrapper {
+  position: relative;
+}
+
+.suggestions {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  position: absolute;
+}
+
+.suggestion {
+  cursor: pointer;
+}
+
+.suggestion:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
