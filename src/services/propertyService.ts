@@ -59,11 +59,12 @@ const like = async ({ id }: { id?: string }) => {
 };
 
 const search = async ({ query }: { query: string }) => {
+  if (query.length < 3) return [];
   try {
     let resp = await (
       await Axios.post(`/api/properties/search`, { search: query })
     ).data;
-    if (resp.properties) return resp.properties;
+    if (resp.properties) return resp.properties.slice(0, 5);
     return [];
   } catch (error) {
     return [];

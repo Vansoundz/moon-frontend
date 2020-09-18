@@ -1,5 +1,6 @@
 import React, { FC, useContext, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
+import { RefetchOptions } from "react-query/types/core/query";
 import { Link } from "react-router-dom";
 import { authContext } from "../../contexts/authContext";
 import PropertyModel from "../../models/PropertyModel";
@@ -7,9 +8,12 @@ import { getProperties, like } from "../../services/propertyService";
 
 interface IProps {
   property: PropertyModel;
+  searchRefetch?: (
+    options?: RefetchOptions | undefined
+  ) => Promise<PropertyModel[] | undefined>;
 }
 
-const Property: FC<IProps> = ({ property }) => {
+const Property: FC<IProps> = ({ property, searchRefetch }) => {
   const {
     title,
     location,
@@ -30,8 +34,11 @@ const Property: FC<IProps> = ({ property }) => {
 
   useEffect(() => {
     if (likeData && likeData.msg === "Success") {
-      refetch();
+      // refetch();
+      if (searchRefetch) searchRefetch();
+      else refetch();
     }
+
     // eslint-disable-next-line
   }, [likeData]);
 

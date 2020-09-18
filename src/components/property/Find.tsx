@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Property from "../../models/PropertyModel";
 import { search } from "../../services/propertyService";
 
@@ -8,6 +8,7 @@ const Find = () => {
   const [searchProperty, { data }] = useMutation(search);
   const [query, setQuery] = useState("");
   const [properties, setProperties] = useState<Property[]>([]);
+  const h = useHistory();
   useEffect(() => {
     if (data) {
       setProperties(data);
@@ -24,14 +25,24 @@ const Find = () => {
           >
             search
           </span>
-          <button className="srch-btn">Search</button>
+          <button
+            className="srch-btn"
+            style={{ cursor: `pointer` }}
+            onClick={() => {
+              if (query.trim()) {
+                h.push(`/search?query=${query.trimEnd().split(" ").join("+")}`);
+              }
+            }}
+          >
+            Search
+          </button>
           <input
             type="search"
             onChange={(e) => {
               setQuery(e.target.value);
-              if (e.target.value.length > 0) {
+              if (e.target.value.length > 2) {
                 searchProperty({ query });
-              }
+              } else setProperties([]);
             }}
           />
         </div>

@@ -10,6 +10,7 @@ import { AnimatePresence } from "framer-motion";
 import RouteGuard from "./RouteGuard";
 import ViewProperty from "../components/property/ViewProperty";
 import Listings from "../components/property/Listings";
+import SearchPage from "../components/property/SearchPage";
 
 const Routes = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const Routes = () => {
     <AnimatePresence exitBeforeEnter key={location.key}>
       <Switch location={location} key={location.key}>
         <Route path="/" exact component={Properties} />
+        <Route path="/search" exact component={SearchPage} />
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
         <Route path="/profile" exact component={Profile} />
