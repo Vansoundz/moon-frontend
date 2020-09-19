@@ -4,7 +4,7 @@ import React, {
   useState /** , { useContext } */,
 } from "react";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getUserById } from "../../services/authService";
 import { authContext } from "../../contexts/authContext";
 import User from "../../models/UserModel";
@@ -48,6 +48,11 @@ const Profile = () => {
                 <h5>{userProfile.name}</h5>
               </div>
               <div>{userProfile.email}</div>
+              <div>
+                {userProfile._id === user?._id && (
+                  <Link to={`/edit/profile`}>Edit profile</Link>
+                )}
+              </div>
             </div>
           </div>
           <div className="user-listings">

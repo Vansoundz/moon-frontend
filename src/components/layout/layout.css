@@ -43,6 +43,21 @@ li.npad {
   display: none;
 }
 
+.logo-svg {
+  width: 16px;
+  height: 16px;
+  stroke: #5e2af1;
+  fill: #5e2af1;
+}
+
+.logo-svg > * {
+  fill: #5e2af1;
+}
+
+a {
+  color: #5e2af1;
+}
+
 @media screen and (max-width: 768px) {
   .nav-wrapper {
     display: none;

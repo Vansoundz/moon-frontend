@@ -148,7 +148,7 @@ const Property: FC<IProps> = ({
                 padding: `8px`,
               }}
             >
-              <Link to={`/edit/${_id}`}>
+              <Link to={`/edit/property/${_id}`}>
                 <div className="material-icons">edit</div>
               </Link>
             </div>

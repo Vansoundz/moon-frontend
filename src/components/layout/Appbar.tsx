@@ -42,7 +42,20 @@ const Appbar = () => {
       <div className="appbar">
         <div className="appbar-wrapper">
           <div className="logo sm">
-            <Link to="/">Moon</Link>
+            <Link to="/">
+              MO
+              <object
+                data="/moon.svg"
+                className="logo-svg"
+                type="image/svg+xml"
+                style={{
+                  transform: `rotateZ(180deg)`,
+                }}
+              >
+                O
+              </object>
+              N
+            </Link>
           </div>
           <div className="menu-icon sm">
             <div className="material-icons" onClick={() => setOpen(!open)}>

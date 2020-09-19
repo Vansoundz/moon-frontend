@@ -5,19 +5,15 @@ import { useMutation } from "react-query";
 import { authContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import Loading from "../layout/Loading";
+import User from "../../models/UserModel";
 
 const Register = () => {
-  const [userData, setUserData] = useState({
-    fullname: "",
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [userData, setUserData] = useState<User>({});
 
   const [pass, setPass] = useState("");
   const ufeed = document.querySelector(".error.username");
   const pfeed = document.querySelector(".error.password");
-  const ffeed = document.querySelector(".error.fullname");
+  const ffeed = document.querySelector(".error.name");
   const efeed = document.querySelector(".error.email");
   const rfeed = document.querySelector(".error.pass");
 
@@ -53,7 +49,7 @@ const Register = () => {
         if (param === "password") {
           pfeed!.textContent = msg;
         }
-        if (param === "fullname") {
+        if (param === "name") {
           ffeed!.textContent = msg;
         }
         if (param === "email") {
@@ -79,21 +75,21 @@ const Register = () => {
     ufeed!.textContent = "";
     pfeed!.textContent = "";
 
-    let { username, fullname, email, password } = userData;
+    let { username, name, email, password } = userData;
     if (!username) {
       ufeed!.textContent = "Username is required";
     } else if (!email) {
       efeed!.textContent = "Email is required";
     } else if (!password) {
       pfeed!.textContent = "Password is required";
-    } else if (!fullname) {
+    } else if (!name) {
       ffeed!.textContent = "Name is required";
     } else if (password.length < 6) {
       pfeed!.textContent = "Password must be 6 or more characters";
     } else if (pass !== password) {
       rfeed!.textContent = "Passwords do not match";
     } else {
-      await createNewUser({ email, password, username, fullname });
+      await createNewUser({ user: userData });
       // let resp = await register(userData);
       // if (resp) {
       //   setFeed(resp.msg);
@@ -165,14 +161,14 @@ const Register = () => {
                 type="text"
                 placeholder="full name"
                 onChange={onChange}
-                id="fullname"
+                id="name"
               />
               <AnimatePresence>
                 <motion.div
                   initial={{ height: 0 }}
                   animate={{ height: `100%` }}
                   exit={{ height: 0 }}
-                  className="error fullname"
+                  className="error name"
                 ></motion.div>
               </AnimatePresence>
             </div>

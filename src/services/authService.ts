@@ -1,4 +1,5 @@
 import Axios from "axios";
+import User from "../models/UserModel";
 
 const login = async ({
   username,
@@ -16,23 +17,10 @@ const login = async ({
   return resp.data;
 };
 
-const createUser = async ({
-  fullname,
-  email,
-  password,
-  username,
-}: {
-  fullname: string;
-  email: string;
-  username: string;
-  password: string;
-}) => {
+const createUser = async ({ user }: { user: User }) => {
   let resp = await (
     await Axios.post("/api/users/register", {
-      email,
-      password,
-      name: fullname,
-      username,
+      ...user,
     })
   ).data;
 
@@ -54,4 +42,16 @@ const logout = async () => {
   return resp;
 };
 
-export { login, createUser, getUser, logout, getUserById };
+const update = async ({ user, profile }: { user: User; profile?: File }) => {
+  if (!user._id) return { errors: [{ msg: "Unauthorized" }] };
+  const form = new FormData();
+  if (profile) {
+    form.append("image", profile);
+  }
+  if (user.name) form.append("name", user.name);
+  let resp = await (await Axios.patch(`/api/users`, form)).data;
+
+  return resp;
+};
+
+export { login, createUser, getUser, logout, getUserById, update };

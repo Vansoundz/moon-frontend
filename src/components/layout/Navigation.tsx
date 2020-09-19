@@ -22,7 +22,20 @@ const Navigation = () => {
     <div className="nav-wrapper">
       <div className="navigation">
         <div className="npad">
-          <Link to="/">MOON</Link>
+          <Link to="/">
+            MO
+            <object
+              data="/moon.svg"
+              className="logo-svg"
+              type="image/svg+xml"
+              style={{
+                transform: `rotateZ(180deg)`,
+              }}
+            >
+              O
+            </object>
+            N
+          </Link>
         </div>
         <div>
           <ul>
