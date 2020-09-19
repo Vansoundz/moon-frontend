@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import User from "../../models/UserModel";
 import { getUser, update } from "../../services/authService";
 import Loading from "../layout/Loading";
+import { Helmet } from "react-helmet";
 
 const EditProfile = () => {
   const { data: usr } = useQuery("get user", getUser);
@@ -89,6 +90,9 @@ const EditProfile = () => {
 
   return (
     <form onSubmit={onSubmit} className="auth">
+      <Helmet>
+        <title>Moon: Edit Profile</title>
+      </Helmet>
       {isLoading && <Loading />}
       <div style={{ display: "flex" }}>
         <div style={{ margin: "auto" }}>

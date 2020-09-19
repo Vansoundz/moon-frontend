@@ -6,6 +6,7 @@ import Property from "../../models/PropertyModel";
 import { editProp, getProperty } from "../../services/propertyService";
 import Loading from "../layout/Loading";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const EditProperty = () => {
   const tfeed = document.querySelector(".error.title");
@@ -103,6 +104,9 @@ const EditProperty = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Moon:Edit Profile</title>
+      </Helmet>
       {(isLoading || loading) && <Loading />}
       <div className="center">
         <form onSubmit={onSubmit}>

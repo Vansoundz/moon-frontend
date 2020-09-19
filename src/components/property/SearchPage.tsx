@@ -5,6 +5,7 @@ import { search } from "../../services/propertyService";
 import Loading from "../layout/Loading";
 import Property from "./Property";
 import PropertyModel from "../../models/PropertyModel";
+import { Helmet } from "react-helmet";
 
 const SearchPage = () => {
   const location = useLocation();
@@ -21,6 +22,9 @@ const SearchPage = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Moon:Search result</title>
+      </Helmet>
       {isLoading && <Loading />}
       <div
         style={{

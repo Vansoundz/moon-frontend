@@ -5,6 +5,7 @@ import Property from "../../models/PropertyModel";
 import { createProperty } from "../../services/propertyService";
 import Loading from "../layout/Loading";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const CreateProperty = () => {
   const tfeed = document.querySelector(".error.title");
@@ -130,6 +131,9 @@ const CreateProperty = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Moon:Create property</title>
+      </Helmet>
       {isLoading && <Loading />}
       <div className="center">
         <form onSubmit={onSubmit}>

@@ -4,6 +4,7 @@ import { getProperties } from "../../services/propertyService";
 import PropertyModel from "../../models/PropertyModel";
 import Loading from "../layout/Loading";
 import Listing from "./Listing";
+import { Helmet } from "react-helmet";
 
 const Listings = () => {
   const { data: properties, isLoading } = useQuery(
@@ -13,6 +14,9 @@ const Listings = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Moon:Property Listings</title>
+      </Helmet>
       {isLoading && <Loading />}
       <div style={{ padding: `16px` }}>
         <h4>Listings</h4>

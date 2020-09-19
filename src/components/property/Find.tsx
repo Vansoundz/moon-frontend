@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 import { Link, useHistory } from "react-router-dom";
 import Property from "../../models/PropertyModel";
 import { search } from "../../services/propertyService";
+import { Helmet } from "react-helmet";
 
 const Find = () => {
   const [searchProperty, { data }] = useMutation(search);
@@ -23,6 +24,9 @@ const Find = () => {
   };
   return (
     <div className="find">
+      <Helmet>
+        <title>Moon:Search property or location</title>
+      </Helmet>
       <div className="find-wrapper">
         <h4>Find your place</h4>
         <form onSubmit={onSubmit}>

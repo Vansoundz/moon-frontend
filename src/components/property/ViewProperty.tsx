@@ -6,6 +6,7 @@ import User from "../../models/UserModel";
 import { createComment, deleteComment } from "../../services/commentService";
 import { getProperty, like } from "../../services/propertyService";
 import Loading from "../layout/Loading";
+import { Helmet } from "react-helmet";
 
 const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -37,6 +38,9 @@ const ViewProperty = () => {
 
   return (
     <div style={{ margin: "16px" }}>
+      <Helmet>
+        <title>Moon: Property</title>
+      </Helmet>
       {isLoading && <Loading />}
 
       {data?.property && (

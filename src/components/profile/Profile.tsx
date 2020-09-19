@@ -11,6 +11,7 @@ import User from "../../models/UserModel";
 import Loading from "../layout/Loading";
 import Property from "../property/Property";
 import "./profile.css";
+import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,6 +28,9 @@ const Profile = () => {
   }, [usr]);
   return (
     <div className="profile">
+      <Helmet>
+        <title>Moon:User Profile</title>
+      </Helmet>
       {isLoading && <Loading />}
       {userProfile && (
         <div>

@@ -5,6 +5,7 @@ import { authContext } from "../../contexts/authContext";
 import { login } from "../../services/authService";
 import { motion, AnimatePresence } from "framer-motion";
 import Loading from "../layout/Loading";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -76,18 +77,13 @@ const Login = () => {
 
   return (
     <form onSubmit={onSubmit} className="auth">
+      <Helmet>
+        <title>Moon: Login</title>
+      </Helmet>
+
       {isLoading && <Loading />}
-      <div
-      // style={{
-      //   display: "flex",
-      // }}
-      >
-        <div
-        // style={{
-        //   display: "block",
-        //   margin: "auto",
-        // }}
-        >
+      <div>
+        <div>
           <h4>Login</h4>
           <div className="">
             <div className="form-item">

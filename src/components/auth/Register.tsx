@@ -6,6 +6,7 @@ import { authContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import Loading from "../layout/Loading";
 import User from "../../models/UserModel";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const [userData, setUserData] = useState<User>({});
@@ -109,6 +110,9 @@ const Register = () => {
 
   return (
     <form onSubmit={onSubmit} className="auth">
+      <Helmet>
+        <title>Moon: Create Account</title>
+      </Helmet>
       {isLoading && <Loading />}
       <div style={{ display: "flex" }}>
         <div style={{ margin: "auto" }}>

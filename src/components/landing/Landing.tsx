@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Landing = () => {
   return (
@@ -8,6 +9,9 @@ const Landing = () => {
         padding: "16px",
       }}
     >
+      <Helmet>
+        <title>Moon: Welcome</title>
+      </Helmet>
       <div
         className="landing"
         style={{
