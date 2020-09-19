@@ -311,7 +311,7 @@ const CreateProperty = () => {
                 type="submit"
                 className="btn "
               >
-                Create
+                Create property
               </button>
             </div>
           </div>

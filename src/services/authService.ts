@@ -49,6 +49,9 @@ const update = async ({ user, profile }: { user: User; profile?: File }) => {
     form.append("image", profile);
   }
   if (user.name) form.append("name", user.name);
+
+  // @ts-ignore
+  if (user.socialMedia) form.append("socialMedia", user.socialMedia);
   let resp = await (await Axios.patch(`/api/users`, form)).data;
 
   return resp;

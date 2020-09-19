@@ -36,16 +36,16 @@ const Profile = () => {
                 <div
                   className="image"
                   style={{
-                    background: `url("/api/files/users/${userProfile._id}/${userProfile.image}")`,
+                    background: `url("${userProfile.image}")`,
                     borderRadius: `50%`,
                     marginRight: `unset`,
                   }}
                 ></div>
               )}
             </div>
-            <div>
-              <div>
-                <h5>{userProfile.name}</h5>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ marginTop: "16px" }}>
+                <h3>{userProfile.name}</h3>
               </div>
               <div>{userProfile.email}</div>
               <div>

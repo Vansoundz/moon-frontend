@@ -108,9 +108,20 @@ const Appbar = () => {
                 <li className="npad" onClick={closeM}>
                   <Link to="/listings">Listings</Link>
                 </li>
-                <li className="npad" onClick={closeM}>
-                  Contact
-                </li>
+                {user ? (
+                  <li className="npad">
+                    <Link to={`/profile/${user._id}`} onClick={closeM}>
+                      Profile
+                    </Link>
+                  </li>
+                ) : (
+                  <li className="npad">
+                    <Link to="/login">Log In</Link>
+                    <Link style={{ marginLeft: "12px" }} to="/register">
+                      Sign Up
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </motion.div>

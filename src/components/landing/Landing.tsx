@@ -12,7 +12,7 @@ const Landing = () => {
         className="landing"
         style={{
           //   background: `url("/assets/homesbg.jpg")`,
-          //   height: `calc(50vh)`,
+          minHeight: `50vh`,
           backgroundAttachment: `fixed`,
           display: "flex",
           justifyContent: "space-evenly",
@@ -23,7 +23,7 @@ const Landing = () => {
       >
         <div style={{ maxWidth: "350px" }}>
           <div style={{ fontWeight: 200, fontSize: "44px" }}>
-            Homes for everyone
+            Serene homes for everyone
           </div>
         </div>
         <div style={{ maxWidth: "350px" }}>
@@ -39,25 +39,50 @@ const Landing = () => {
             molestiae, delectus accusamus distinctio hic, ad aliquam rem eveniet
             accusantium odio commodi ut quod velit tenetur beatae.
           </div>
-          <Link to="/listings"> View listings</Link>
+          <Link to="/listings" id="view-listings">
+            {" "}
+            View listings
+          </Link>
         </div>
       </div>
       <div
         style={{
           background: `#fff")`,
-          height: `calc(60vh)`,
+          minHeight: `60vh`,
         }}
       >
-        Some text
-      </div>
-      <div
-        style={{
-          background: `#4d61ec`,
-          height: `calc(60vh)`,
-          backgroundPosition: `fixed`,
-        }}
-      >
-        Some text
+        <div className="features-section">
+          <h1>Why choose us</h1>
+          <div className="features">
+            <div className="feature">
+              <div></div>
+              <h4>lorem ipsum</h4>
+              <div>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Commodi perspiciatis sapiente praesentium omnis nihil
+                consequuntur soluta reru
+              </div>
+            </div>
+            <div className="feature">
+              <div></div>
+              <h4>lorem ipsum</h4>
+              <div>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Commodi perspiciatis sapiente praesentium omnis nihil
+                consequuntur soluta reru
+              </div>
+            </div>
+            <div className="feature">
+              <div></div>
+              <h4>lorem ipsum</h4>
+              <div>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Commodi perspiciatis sapiente praesentium omnis nihil
+                consequuntur soluta reru
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

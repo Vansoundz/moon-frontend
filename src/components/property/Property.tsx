@@ -60,7 +60,7 @@ const Property: FC<IProps> = ({
         <div
           className="image"
           style={{
-            background: `url("/api/files/properties/${usr?._id}/${image}")`,
+            background: `url("${image}")`,
           }}
         >
           {user && (

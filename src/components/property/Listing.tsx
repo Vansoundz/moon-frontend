@@ -20,7 +20,6 @@ const Listing: FC<IProp> = ({ property }) => {
     likes,
     bedrooms,
     location,
-    user: usr,
   } = property;
   const [likeProperty, { data: likeData }] = useMutation(like);
   const { refetch } = useQuery("get properties", getProperties);
@@ -43,7 +42,7 @@ const Listing: FC<IProp> = ({ property }) => {
           <div
             className="l-image"
             style={{
-              background: `url("/api/files/properties/${usr?._id}/${image}")`,
+              background: `url("${image}")`,
             }}
           >
             {user && (

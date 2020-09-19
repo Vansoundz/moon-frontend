@@ -51,13 +51,56 @@ const Navigation = () => {
             <li className="npad">
               <Link to="/listings">Listings</Link>
             </li>
-            <li className="npad">Contact</li>
+            {/* <li className="npad">
+              <Link to="/listings">Profile</Link>
+            </li> */}
+            {/* <li className="npad">Contact</li> */}
           </ul>
         </div>
-        <div className="npad">
-          <span>f</span>
-          <span>t</span>
-          <span>i</span>
+        <div className="npad social">
+          <a
+            href="https://www.facebook.com/TurnToGODhehasalltheanswers"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <object
+              data="/assets/facebook.svg"
+              className="social-icon"
+              type="image/svg+xml"
+              style={{ marginTop: "10px" }}
+            >
+              f
+            </object>
+          </a>
+          <a
+            href="https://twitter.com/silentEvans"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <object
+              data="/assets/twitter.svg"
+              className="social-icon"
+              type="image/svg+xml"
+              style={{ marginTop: "10px" }}
+            >
+              t
+            </object>
+          </a>
+
+          <a
+            href="https://www.instagram.com/vansoundz/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <object
+              data="/assets/instagram.svg"
+              className="social-icon"
+              type="image/svg+xml"
+              style={{ marginTop: "10px" }}
+            >
+              i
+            </object>
+          </a>
         </div>
       </div>
     </div>

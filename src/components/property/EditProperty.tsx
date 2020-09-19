@@ -287,7 +287,7 @@ const EditProperty = () => {
                 type="submit"
                 className="btn "
               >
-                Create
+                Edit Property
               </button>
             </div>
           </div>

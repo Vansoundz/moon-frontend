@@ -46,7 +46,7 @@ const ViewProperty = () => {
               <div
                 className="image"
                 style={{
-                  background: `url("/api/files/properties/${data.property.user?._id}/${data.property.image}")`,
+                  background: `url("${data?.property?.image}")`,
                 }}
               >
                 <div

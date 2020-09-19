@@ -8,6 +8,11 @@ interface User {
   name?: string;
   image?: string;
   properties?: Property[];
+  socialMedia?: {
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+  };
 }
 
 type Auth = {

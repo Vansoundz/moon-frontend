@@ -58,6 +58,19 @@ a {
   color: #5e2af1;
 }
 
+.social {
+  display: flex;
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.social > a:not(:first-child) {
+  margin-left: 8px;
+}
+
 @media screen and (max-width: 768px) {
   .nav-wrapper {
     display: none;
