@@ -1,6 +1,7 @@
 import React, { FC, useContext, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { authContext } from "../../contexts/authContext";
 import Property from "../../models/PropertyModel";
 import { getProperties, like } from "../../services/propertyService";
@@ -19,6 +20,7 @@ const Listing: FC<IProp> = ({ property }) => {
     likes,
     bedrooms,
     location,
+    user: usr,
   } = property;
   const [likeProperty, { data: likeData }] = useMutation(like);
   const { refetch } = useQuery("get properties", getProperties);
@@ -40,7 +42,9 @@ const Listing: FC<IProp> = ({ property }) => {
         <div>
           <div
             className="l-image"
-            style={{ background: `url(/api/files/${image})` }}
+            style={{
+              background: `url("/api/files/properties/${usr?._id}/${image}")`,
+            }}
           >
             {user && (
               <div
@@ -51,14 +55,17 @@ const Listing: FC<IProp> = ({ property }) => {
                   height: `40px`,
                 }}
                 onClick={async () => {
+                  if (!user) {
+                    return toast("Log in to like", { type: "warning" });
+                  }
                   await likeProperty({ id: _id });
                 }}
               >
                 <span>
                   <span className="material-icons">
                     {likes?.includes(user._id || "")
-                      ? "bookmark"
-                      : "bookmark_border"}
+                      ? "favorite"
+                      : "favorite_border"}
                   </span>
                 </span>
               </div>

@@ -4,6 +4,7 @@ import "./index.css";
 import "./components/auth/auth.css";
 import App from "./App";
 import AuthContext from "./contexts/authContext";
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.render(
   <>

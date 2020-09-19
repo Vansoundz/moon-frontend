@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import React, { useContext, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
@@ -22,6 +22,21 @@ const Appbar = () => {
     }
   }, [data, dispatch]);
 
+  const variants: Variants = {
+    initial: {
+      y: -1000,
+      opacity: 0,
+    },
+    animate: {
+      y: 0,
+      opacity: 1,
+    },
+    exit: {
+      y: 1000,
+      opacity: 0,
+    },
+  };
+
   return (
     <>
       <div className="appbar">
@@ -37,7 +52,9 @@ const Appbar = () => {
           <div className="account lg">
             {user ? (
               <>
-                <span className="material-icons">account_circle</span>
+                <Link to={`/profile/${user._id}`}>
+                  <span className="material-icons">account_circle</span>
+                </Link>
                 <span onClick={() => logoutUser()} className="material-icons">
                   power_settings_new
                 </span>
@@ -54,18 +71,14 @@ const Appbar = () => {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{
-              y: -1000,
-              opacity: 0,
+            variants={variants}
+            initial="initial"
+            animate="animate"
+            transition={{
+              type: "tween",
+              duration: 0.4,
             }}
-            animate={{
-              y: 0,
-              opacity: 1,
-            }}
-            exit={{
-              y: 1000,
-              opacity: 0,
-            }}
+            exit="exit"
             className="menu"
           >
             <div>

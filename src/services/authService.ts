@@ -44,9 +44,14 @@ const getUser = async () => {
   return resp;
 };
 
+const getUserById = async (key: string, id: string) => {
+  const resp = await (await Axios.get(`/api/users/${id}`)).data;
+  return resp;
+};
+
 const logout = async () => {
   let resp = await (await Axios.post("/api/users/logout")).data;
   return resp;
 };
 
-export { login, createUser, getUser, logout };
+export { login, createUser, getUser, logout, getUserById };

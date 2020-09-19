@@ -48,7 +48,7 @@ const getProperty = async (key: string, id?: string) => {
   if (!id) return { errors: { msg: "Error getting property" } };
 
   let property = await (await Axios.get(`/api/properties/${id}`)).data;
-  console.log(property);
+
   return property;
 };
 
@@ -71,4 +71,29 @@ const search = async ({ query }: { query: string }) => {
   }
 };
 
-export { createProperty, getProperties, getProperty, like, search };
+const editProp = async ({ property }: { property: Property }) => {
+  const form = new FormData();
+
+  form.append("title", property.title!);
+
+  // @ts-ignore
+  form.append("price", property.price);
+  // @ts-ignore
+  form.append("bathrooms", property.bathrooms!);
+  // @ts-ignore
+  form.append("bedrooms", property.bedrooms!);
+  if (property.file) {
+    form.append("image", property.file!);
+  }
+  form.append("description", property.description!);
+  form.append("location", property.location!);
+
+  const resp = await (
+    await Axios.patch(`/api/properties/${property._id}`, form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+  ).data;
+  return resp;
+};
+
+export { createProperty, getProperties, getProperty, like, search, editProp };

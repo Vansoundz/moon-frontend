@@ -16,7 +16,7 @@ const Properties = () => {
   return (
     <>
       {isLoading && <Loading />}
-      <motion.div className="container">
+      <motion.div className="container" style={{ margin: `16px` }}>
         {properties &&
           properties.map((property: PropertyModel, i: number) => (
             <Property key={i} property={property} />

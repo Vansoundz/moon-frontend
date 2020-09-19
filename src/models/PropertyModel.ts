@@ -11,6 +11,7 @@ interface Property {
   images?: string[];
   likes?: string[];
   date?: Date;
+  user?: User;
   location?: string;
   bedrooms?: string | number;
   bathrooms?: string | number;

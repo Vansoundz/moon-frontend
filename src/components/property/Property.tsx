@@ -2,6 +2,7 @@ import React, { FC, useContext, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import { RefetchOptions } from "react-query/types/core/query";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { authContext } from "../../contexts/authContext";
 import PropertyModel from "../../models/PropertyModel";
 import { getProperties, like } from "../../services/propertyService";
@@ -11,9 +12,18 @@ interface IProps {
   searchRefetch?: (
     options?: RefetchOptions | undefined
   ) => Promise<PropertyModel[] | undefined>;
+  profileRefetch?: (
+    options?: RefetchOptions | undefined
+  ) => Promise<PropertyModel[] | undefined>;
+  edit?: boolean;
 }
 
-const Property: FC<IProps> = ({ property, searchRefetch }) => {
+const Property: FC<IProps> = ({
+  property,
+  searchRefetch,
+  profileRefetch,
+  edit = false,
+}) => {
   const {
     title,
     location,
@@ -24,6 +34,7 @@ const Property: FC<IProps> = ({ property, searchRefetch }) => {
     bathrooms,
     bedrooms,
     likes,
+    user: usr,
   } = property;
 
   const {
@@ -36,6 +47,7 @@ const Property: FC<IProps> = ({ property, searchRefetch }) => {
     if (likeData && likeData.msg === "Success") {
       // refetch();
       if (searchRefetch) searchRefetch();
+      else if (profileRefetch) profileRefetch();
       else refetch();
     }
 
@@ -48,28 +60,39 @@ const Property: FC<IProps> = ({ property, searchRefetch }) => {
         <div
           className="image"
           style={{
-            background: `url(/api/files/${image})`,
+            background: `url("/api/files/properties/${usr?._id}/${image}")`,
           }}
         >
           {user && (
             <div
               style={{
-                padding: `8px`,
-                background: `#0000005f`,
-                color: `#fff`,
-                height: `40px`,
-              }}
-              onClick={async () => {
-                await likeProperty({ id: _id });
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
               }}
             >
-              <span>
-                <span className="material-icons">
-                  {likes?.includes(user._id || "")
-                    ? "bookmark"
-                    : "bookmark_border"}
+              <div
+                style={{
+                  padding: `8px`,
+                  background: `#0000005f`,
+                  color: `#fff`,
+                  height: `40px`,
+                }}
+                onClick={async () => {
+                  if (!user) {
+                    return toast("Log in to like", { type: "warning" });
+                  }
+                  await likeProperty({ id: _id });
+                }}
+              >
+                <span>
+                  <span className="material-icons">
+                    {likes?.includes(user._id || "")
+                      ? "favorite"
+                      : "favorite_border"}
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
           )}
         </div>
@@ -115,6 +138,22 @@ const Property: FC<IProps> = ({ property, searchRefetch }) => {
         </div>
         <div>Ksh {price}</div>
         <div>{location}</div>
+        {/* <div>
+          <Link to={`/profile/${usr?._id}`}>{usr?.username}</Link>
+        </div> */}
+        <div>
+          {edit && user && usr && user._id === usr._id && (
+            <div
+              style={{
+                padding: `8px`,
+              }}
+            >
+              <Link to={`/edit/${_id}`}>
+                <div className="material-icons">edit</div>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

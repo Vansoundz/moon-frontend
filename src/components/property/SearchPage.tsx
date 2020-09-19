@@ -22,7 +22,12 @@ const SearchPage = () => {
   return (
     <div>
       {isLoading && <Loading />}
-      <div>
+      <div
+        style={{
+          margin: "16px",
+        }}
+        id="search-page"
+      >
         <h4>Search results</h4>
 
         {data && (

@@ -1,9 +1,13 @@
+import Property from "./PropertyModel";
+
 interface User {
   email?: string;
   username?: string;
   _id?: string;
   password?: string;
   name?: string;
+  image?: string;
+  properties?: Property[];
 }
 
 type Auth = {

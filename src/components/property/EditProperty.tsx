@@ -1,12 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { FormEvent, useEffect, useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import Property from "../../models/PropertyModel";
-import { createProperty } from "../../services/propertyService";
+import { editProp, getProperty } from "../../services/propertyService";
 import Loading from "../layout/Loading";
 import { toast } from "react-toastify";
 
-const CreateProperty = () => {
+const EditProperty = () => {
   const tfeed = document.querySelector(".error.title");
   const pfeed = document.querySelector(".error.price");
   const dfeed = document.querySelector(".error.description");
@@ -27,53 +28,33 @@ const CreateProperty = () => {
     }, 4000);
   };
 
-  const [property, setProperty] = useState<Property>({
-    title: "",
-    price: 0,
-  });
+  const { id } = useParams<{ id: string }>();
+  const [property, setProperty] = useState<Property>({});
+  const { data, isLoading } = useQuery(
+    ["get single property", id],
+    getProperty
+  );
 
-  const [createNewProperty, { data, isLoading, error }] = useMutation(
-    createProperty
+  const [editProperty, { data: edit, isLoading: loading }] = useMutation(
+    editProp
   );
 
   useEffect(() => {
-    if (data) {
-      if (data.errors) {
-        console.log(data);
-        data.errors?.forEach(
-          ({ msg, param }: { msg: string; param: string }) => {
-            if (param === "title") {
-              tfeed!.textContent = msg;
-            }
-            if (param === "price") {
-              pfeed!.textContent = msg;
-            }
-            if (param === "image") {
-              ffeed!.textContent = msg;
-            }
-            if (param === "location") {
-              lfeed!.textContent = msg;
-            }
-            if (param === "description") {
-              dfeed!.textContent = msg;
-            }
-            if (param === "bedrooms") {
-              bdfeed!.textContent = msg;
-            }
-            if (param === "bathrooms") {
-              btfeed!.textContent = msg;
-            }
-          }
-        );
-        resetFields();
-      }
-      if (data.property) {
-        toast("Property created successfully", { type: "success" });
-        setProperty({});
-      }
+    if (data && data.property) setProperty(data.property);
+  }, [data]);
+
+  useEffect(() => {
+    if (edit && edit.property) {
+      console.log(edit.property);
+      toast("Property edited", { type: "success" });
     }
-    // eslint-disable-next-line
-  }, [data, error, pfeed, dfeed, lfeed, ffeed, tfeed]);
+  }, [edit]);
+
+  const variants = {
+    initial: { height: 0 },
+    animate: { height: `100%` },
+    exit: { height: 0 },
+  };
 
   const onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setProperty({
@@ -88,7 +69,7 @@ const CreateProperty = () => {
       title,
       price,
       description,
-      file,
+
       location,
       bathrooms,
       bedrooms,
@@ -100,8 +81,6 @@ const CreateProperty = () => {
       pfeed!.textContent = "Price is required";
     } else if (!description) {
       dfeed!.textContent = "Description is required";
-    } else if (!file) {
-      ffeed!.textContent = "Please select an image";
     } else if (!location) {
       lfeed!.textContent = "Location is required";
     } else if (!bathrooms) {
@@ -111,7 +90,7 @@ const CreateProperty = () => {
     } else {
       // uole.log(property);
 
-      await createNewProperty({ property });
+      await editProperty({ property });
       // setProperty({
       //   title: "",
       //   description: "",
@@ -122,15 +101,9 @@ const CreateProperty = () => {
     resetFields();
   };
 
-  const variants = {
-    initial: { height: 0 },
-    animate: { height: `100%` },
-    exit: { height: 0 },
-  };
-
   return (
-    <>
-      {isLoading && <Loading />}
+    <div>
+      {(isLoading || loading) && <Loading />}
       <div className="center">
         <form onSubmit={onSubmit}>
           <div className="row" style={{ display: "flex" }}>
@@ -257,7 +230,10 @@ const CreateProperty = () => {
               <div className="file-field ">
                 {property.file ? (
                   <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
                   >
                     <div style={{ fontSize: `12px` }}>
                       Selected file:
@@ -317,8 +293,8 @@ const CreateProperty = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
-export default CreateProperty;
+export default EditProperty;

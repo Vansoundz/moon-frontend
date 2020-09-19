@@ -36,7 +36,7 @@ const ViewProperty = () => {
   } = useContext(authContext);
 
   return (
-    <div>
+    <div style={{ margin: "16px" }}>
       {isLoading && <Loading />}
 
       {data?.property && (
@@ -46,7 +46,7 @@ const ViewProperty = () => {
               <div
                 className="image"
                 style={{
-                  background: `url(/api/files/${data.property.image})`,
+                  background: `url("/api/files/properties/${data.property.user?._id}/${data.property.image}")`,
                 }}
               >
                 <div
@@ -65,8 +65,8 @@ const ViewProperty = () => {
                       }}
                     >
                       {data.property.likes.includes(user?._id)
-                        ? "bookmark"
-                        : "bookmark_border"}
+                        ? "favorite"
+                        : "favorite_border"}
                     </span>
                   </span>
                 </div>
