@@ -14,7 +14,6 @@
     "axios": "^0.19.2",
     "framer-motion": "^2.6.13",
     "http-proxy-middleware": "^1.0.5",
-    "proxy": "https://moon-back.herokuapp.com",
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
