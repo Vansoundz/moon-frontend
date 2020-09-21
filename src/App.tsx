@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Navigation from "./components/layout/Navigation";
 import Routes from "./routes/Routes";
-import { BrowserRouter } from "react-router-dom";
+
 import { authContext } from "./contexts/authContext";
 import { useQuery } from "react-query";
 import { getUser } from "./services/authService";
@@ -20,8 +20,9 @@ const App = () => {
   useEffect(() => {
     if (data && data.user) {
       dispatch({ type: `LOGIN`, payload: data.user });
-    }
-    if (data && data.errors) {
+    } else if (data && data.errors) {
+      dispatch({ type: `STOP` });
+    } else {
       dispatch({ type: `STOP` });
     }
     if (error) {
@@ -31,7 +32,7 @@ const App = () => {
   }, [data, error]);
 
   return (
-    <BrowserRouter>
+    <>
       {loading ? (
         <Loading />
       ) : (
@@ -44,7 +45,7 @@ const App = () => {
           <ToastContainer position="top-right" hideProgressBar={true} />
         </div>
       )}
-    </BrowserRouter>
+    </>
   );
 };
 

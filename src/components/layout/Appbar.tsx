@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
 import { authContext } from "../../contexts/authContext";
 import { logout } from "../../services/authService";
+import moon from "../../assets/moon.svg";
 
 const Appbar = () => {
   const [logoutUser, { data }] = useMutation(logout);
@@ -45,7 +46,7 @@ const Appbar = () => {
             <Link to="/">
               MO
               <object
-                data="/moon.svg"
+                data={moon}
                 className="logo-svg"
                 type="image/svg+xml"
                 style={{

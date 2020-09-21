@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { authContext } from "../../contexts/authContext";
 import { logout } from "../../services/authService";
 import "./layout.css";
+import moon from "../../assets/moon.svg";
+import facebook from "../../assets/facebook.svg";
+import twitter from "../../assets/twitter.svg";
+import instagram from "../../assets/instagram.svg";
 
 const Navigation = () => {
   const { dispatch } = useContext(authContext);
@@ -25,7 +29,7 @@ const Navigation = () => {
           <Link to="/">
             MO
             <object
-              data="/moon.svg"
+              data={moon}
               className="logo-svg"
               type="image/svg+xml"
               style={{
@@ -64,7 +68,7 @@ const Navigation = () => {
             rel="noopener noreferrer"
           >
             <object
-              data="/assets/facebook.svg"
+              data={facebook}
               className="social-icon"
               type="image/svg+xml"
               style={{ marginTop: "10px" }}
@@ -78,7 +82,7 @@ const Navigation = () => {
             rel="noopener noreferrer"
           >
             <object
-              data="/assets/twitter.svg"
+              data={twitter}
               className="social-icon"
               type="image/svg+xml"
               style={{ marginTop: "10px" }}
@@ -93,7 +97,7 @@ const Navigation = () => {
             rel="noopener noreferrer"
           >
             <object
-              data="/assets/instagram.svg"
+              data={instagram}
               className="social-icon"
               type="image/svg+xml"
               style={{ marginTop: "10px" }}

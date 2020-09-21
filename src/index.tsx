@@ -9,15 +9,16 @@ import "./components/landing/landing.css";
 import App from "./App";
 import AuthContext from "./contexts/authContext";
 import "react-toastify/dist/ReactToastify.css";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <>
+  <BrowserRouter>
     <AuthContext>
       <React.StrictMode>
         <App />
       </React.StrictMode>
     </AuthContext>
-  </>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

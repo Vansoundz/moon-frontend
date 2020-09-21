@@ -7,6 +7,9 @@ import User from "../../models/UserModel";
 import { getUser, update } from "../../services/authService";
 import Loading from "../layout/Loading";
 import { Helmet } from "react-helmet";
+import facebook from "../../assets/facebook.svg";
+import twitter from "../../assets/twitter.svg";
+import instagram from "../../assets/instagram.svg";
 
 const EditProfile = () => {
   const { data: usr } = useQuery("get user", getUser);
@@ -122,7 +125,7 @@ const EditProfile = () => {
           <div className="">
             <div className="form-item">
               <object
-                data="/assets/facebook.svg"
+                data={facebook}
                 className="logo-svg form-icon"
                 type="image/svg+xml"
                 style={{ marginTop: "10px" }}
@@ -150,7 +153,7 @@ const EditProfile = () => {
           <div className="">
             <div className="form-item">
               <object
-                data="/assets/twitter.svg"
+                data={twitter}
                 className="logo-svg form-icon"
                 type="image/svg+xml"
                 style={{ marginTop: "10px" }}
@@ -178,7 +181,7 @@ const EditProfile = () => {
           <div className="">
             <div className="form-item">
               <object
-                data="/assets/instagram.svg"
+                data={instagram}
                 className="logo-svg form-icon"
                 type="image/svg+xml"
                 style={{ marginTop: "10px" }}

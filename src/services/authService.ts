@@ -18,23 +18,41 @@ const login = async ({
 };
 
 const createUser = async ({ user }: { user: User }) => {
-  let resp = await (
-    await Axios.post("/api/users/register", {
-      ...user,
-    })
-  ).data;
+  try {
+    let resp = await (
+      await Axios.post("/api/users/register", {
+        ...user,
+      })
+    ).data;
 
-  return resp;
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getUser = async () => {
-  let resp = await (await Axios.get("/api/users")).data;
-  return resp;
+  try {
+    let resp = await (
+      await Axios.get(`http://moon-back.herokuapp.com/api/users`)
+    ).data;
+    console.log(resp);
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getUserById = async (key: string, id: string) => {
-  const resp = await (await Axios.get(`/api/users/${id}`)).data;
-  return resp;
+  try {
+    const resp = await (await Axios.get(`/api/users/${id}`)).data;
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const logout = async () => {
@@ -43,18 +61,23 @@ const logout = async () => {
 };
 
 const update = async ({ user, profile }: { user: User; profile?: File }) => {
-  if (!user._id) return { errors: [{ msg: "Unauthorized" }] };
-  const form = new FormData();
-  if (profile) {
-    form.append("image", profile);
+  try {
+    if (!user._id) return { errors: [{ msg: "Unauthorized" }] };
+    const form = new FormData();
+    if (profile) {
+      form.append("image", profile);
+    }
+    if (user.name) form.append("name", user.name);
+
+    // @ts-ignore
+    if (user.socialMedia) form.append("socialMedia", user.socialMedia);
+    let resp = await (await Axios.patch(`/api/users`, form)).data;
+
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
-  if (user.name) form.append("name", user.name);
-
-  // @ts-ignore
-  if (user.socialMedia) form.append("socialMedia", user.socialMedia);
-  let resp = await (await Axios.patch(`/api/users`, form)).data;
-
-  return resp;
 };
 
 export { login, createUser, getUser, logout, getUserById, update };

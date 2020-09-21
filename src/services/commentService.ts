@@ -6,6 +6,7 @@ const createComment = async ({ id, text }: { id: string; text: string }) => {
     return resp;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
@@ -16,9 +17,15 @@ const deleteComment = async ({
   property_id: string;
   comment_id: string;
 }) => {
-  let resp = (await Axios.delete(`/api/comments/${property_id}/${comment_id}`))
-    .data;
-  return resp;
+  try {
+    let resp = (
+      await Axios.delete(`/api/comments/${property_id}/${comment_id}`)
+    ).data;
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 export { createComment, deleteComment };

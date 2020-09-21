@@ -6,56 +6,67 @@ const createProperty = async ({
 }: {
   property: Property;
 }): Promise<any> => {
-  // try {
-  const form = new FormData();
+  try {
+    const form = new FormData();
 
-  form.append("title", property.title!);
+    form.append("title", property.title!);
 
-  // @ts-ignore
-  form.append("price", property.price);
-  // @ts-ignore
-  form.append("bathrooms", property.bathrooms!);
-  // @ts-ignore
-  form.append("bedrooms", property.bedrooms!);
-  form.append("image", property.file!);
-  form.append("description", property.description!);
-  form.append("location", property.location!);
+    // @ts-ignore
+    form.append("price", property.price);
+    // @ts-ignore
+    form.append("bathrooms", property.bathrooms!);
+    // @ts-ignore
+    form.append("bedrooms", property.bedrooms!);
+    form.append("image", property.file!);
+    form.append("description", property.description!);
+    form.append("location", property.location!);
 
-  let resp = await Axios.post("/api/properties", form, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+    let resp = await Axios.post("/api/properties", form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
-  // console.log(resp)
-  return resp.data;
-  // } catch (error) {
-  //   console.log(error);
-  //   // return error.response.data;
-  // }
+    // console.log(resp)
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const getProperties = async (): Promise<Property[]> => {
-  // try {
-  let resp: Property[] = (await (await Axios.get(`/api/properties`))
-    .data) as Property[];
+  try {
+    let resp: Property[] = (await (await Axios.get(`/api/properties`))
+      .data) as Property[];
 
-  return resp;
-  // } catch (error) {
-  //   return [];
-  // }
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const getProperty = async (key: string, id?: string) => {
-  if (!id) return { errors: { msg: "Error getting property" } };
+  try {
+    if (!id) return { errors: { msg: "Error getting property" } };
 
-  let property = await (await Axios.get(`/api/properties/${id}`)).data;
+    let property = await (await Axios.get(`/api/properties/${id}`)).data;
 
-  return property;
+    return property;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const like = async ({ id }: { id?: string }) => {
-  if (!id) return null;
-  let resp = await (await Axios.patch(`/api/properties/${id}/like`)).data;
-  return resp;
+  try {
+    if (!id) return null;
+    let resp = await (await Axios.patch(`/api/properties/${id}/like`)).data;
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const search = async ({ query }: { query: string }) => {
