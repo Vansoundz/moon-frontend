@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { api } from "../api/auth";
 import User from "../models/UserModel";
 
 const login = async ({
@@ -8,11 +9,7 @@ const login = async ({
   username: string;
   password: string;
 }) => {
-  let resp = await Axios.post(
-    "/api/users/login",
-    { username, password },
-    { headers: { "Content-Type": "application/json" } }
-  );
+  let resp = await api.login(username, password);
 
   return resp.data;
 };
@@ -34,9 +31,7 @@ const createUser = async ({ user }: { user: User }) => {
 
 const getUser = async () => {
   try {
-    let resp = await (
-      await Axios.get(`http://moon-back.herokuapp.com/api/users`)
-    ).data;
+    let resp = await (await api.getUser()).data;
     console.log(resp);
     return resp;
   } catch (error) {

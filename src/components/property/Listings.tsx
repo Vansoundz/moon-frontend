@@ -22,6 +22,7 @@ const Listings = () => {
         <h4>Listings</h4>
         <div className="listings">
           {properties &&
+            typeof properties === "object" &&
             properties.map((property: PropertyModel, i: number) => (
               <Listing property={property} key={i} />
             ))}
