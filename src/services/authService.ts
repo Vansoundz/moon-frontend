@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { api } from "../api/auth";
 import User from "../models/UserModel";
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,7 +12,10 @@ const login = async ({
   username: string;
   password: string;
 }) => {
-  let resp = await api.login(username, password);
+  let resp = await Axios.post(`${backendUrl}/api/users/login`, {
+    username,
+    password,
+  });
 
   return resp.data;
 };
@@ -35,8 +37,8 @@ const createUser = async ({ user }: { user: User }) => {
 
 const getUser = async () => {
   try {
-    let resp = (await api.getUser()).data;
-    console.log(resp);
+    let resp = (await Axios.get(`${backendUrl}/api/users`)).data;
+
     return resp;
   } catch (error) {
     console.log(error);
