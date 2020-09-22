@@ -1,6 +1,9 @@
 import Axios from "axios";
 import Property from "../models/PropertyModel";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const createProperty = async ({
   property,
 }: {
@@ -35,7 +38,8 @@ const createProperty = async ({
 
 const getProperties = async (): Promise<Property[]> => {
   try {
-    let resp: Property[] = (await (await Axios.get(`/api/properties`))
+    const backendUrl = process.env.REACT_APP_PROD_BACKEND;
+    let resp: Property[] = (await (await Axios.get(`${backendUrl}/properties`))
       .data) as Property[];
 
     return resp;
