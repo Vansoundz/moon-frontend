@@ -1,8 +1,9 @@
 import Axios from "axios";
 import Property from "../models/PropertyModel";
-
 import dotenv from "dotenv";
 dotenv.config();
+
+const backendUrl = process.env.REACT_APP_PROD_BACKEND;
 
 const createProperty = async ({
   property,
@@ -24,7 +25,7 @@ const createProperty = async ({
     form.append("description", property.description!);
     form.append("location", property.location!);
 
-    let resp = await Axios.post("/api/properties", form, {
+    let resp = await Axios.post(`${backendUrl}/api/properties`, form, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
@@ -38,9 +39,8 @@ const createProperty = async ({
 
 const getProperties = async (): Promise<Property[]> => {
   try {
-    const backendUrl = process.env.REACT_APP_PROD_BACKEND;
-    let resp: Property[] = (await (await Axios.get(`${backendUrl}/properties`))
-      .data) as Property[];
+    let resp: Property[] = (await Axios.get(`${backendUrl}/api/properties`))
+      .data as Property[];
 
     return resp;
   } catch (error) {
@@ -53,7 +53,7 @@ const getProperty = async (key: string, id?: string) => {
   try {
     if (!id) return { errors: { msg: "Error getting property" } };
 
-    let property = await (await Axios.get(`/api/properties/${id}`)).data;
+    let property = (await Axios.get(`${backendUrl}/api/properties/${id}`)).data;
 
     return property;
   } catch (error) {
@@ -65,7 +65,8 @@ const getProperty = async (key: string, id?: string) => {
 const like = async ({ id }: { id?: string }) => {
   try {
     if (!id) return null;
-    let resp = await (await Axios.patch(`/api/properties/${id}/like`)).data;
+    let resp = (await Axios.patch(`${backendUrl}/api/properties/${id}/like`))
+      .data;
     return resp;
   } catch (error) {
     console.log(error);
@@ -76,8 +77,8 @@ const like = async ({ id }: { id?: string }) => {
 const search = async ({ query }: { query: string }) => {
   if (query.length < 3) return [];
   try {
-    let resp = await (
-      await Axios.post(`/api/properties/search`, { search: query })
+    let resp = (
+      await Axios.post(`${backendUrl}/api/properties/search`, { search: query })
     ).data;
     if (resp.properties) return resp.properties.slice(0, 5);
     return [];
@@ -103,8 +104,8 @@ const editProp = async ({ property }: { property: Property }) => {
   form.append("description", property.description!);
   form.append("location", property.location!);
 
-  const resp = await (
-    await Axios.patch(`/api/properties/${property._id}`, form, {
+  const resp = (
+    await Axios.patch(`${backendUrl}/api/properties/${property._id}`, form, {
       headers: { "Content-Type": "multipart/form-data" },
     })
   ).data;
