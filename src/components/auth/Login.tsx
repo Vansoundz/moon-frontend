@@ -6,6 +6,7 @@ import { login } from "../../services/authService";
 import { motion, AnimatePresence } from "framer-motion";
 import Loading from "../layout/Loading";
 import { Helmet } from "react-helmet";
+import cookies from "js-cookie";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -41,6 +42,7 @@ const Login = () => {
         }
       });
     } else if (data?.user) {
+      cookies.set("auth", data.token);
       dispatch({ type: "LOGIN", payload: data.user });
     }
     // eslint-disable-next-line

@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import Loading from "../layout/Loading";
 import User from "../../models/UserModel";
 import { Helmet } from "react-helmet";
+import cookies from "js-cookie";
 
 const Register = () => {
   const [userData, setUserData] = useState<User>({});
@@ -66,6 +67,7 @@ const Register = () => {
         if (ffeed) ffeed.textContent = "";
       }, 4000);
     } else if (data?.user) {
+      cookies.set("auth", data.token);
       dispatch({ type: "LOGIN", payload: data.user });
     }
     // eslint-disable-next-line

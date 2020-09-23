@@ -20,9 +20,8 @@ const App = () => {
   useEffect(() => {
     if (data && data.user) {
       dispatch({ type: `LOGIN`, payload: data.user });
-    } else if (data && data.errors) {
-      dispatch({ type: `STOP` });
-    } else {
+    }
+    if (data && data.errors) {
       dispatch({ type: `STOP` });
     }
     if (error) {

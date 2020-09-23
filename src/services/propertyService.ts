@@ -1,6 +1,7 @@
 import Axios from "axios";
 import Property from "../models/PropertyModel";
 import dotenv from "dotenv";
+import { setHead } from "./util";
 dotenv.config();
 
 const backendUrl = process.env.REACT_APP_PROD_BACKEND;
@@ -25,9 +26,11 @@ const createProperty = async ({
     form.append("description", property.description!);
     form.append("location", property.location!);
 
-    let resp = await Axios.post(`${backendUrl}/api/properties`, form, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    let resp = await Axios.post(
+      `${backendUrl}/api/properties`,
+      form,
+      setHead(true)
+    );
 
     // console.log(resp)
     return resp.data;
@@ -65,8 +68,9 @@ const getProperty = async (key: string, id?: string) => {
 const like = async ({ id }: { id?: string }) => {
   try {
     if (!id) return null;
-    let resp = (await Axios.patch(`${backendUrl}/api/properties/${id}/like`))
-      .data;
+    let resp = (
+      await Axios.patch(`${backendUrl}/api/properties/${id}/like`, setHead())
+    ).data;
     return resp;
   } catch (error) {
     console.log(error);
@@ -105,9 +109,11 @@ const editProp = async ({ property }: { property: Property }) => {
   form.append("location", property.location!);
 
   const resp = (
-    await Axios.patch(`${backendUrl}/api/properties/${property._id}`, form, {
-      headers: { "Content-Type": "multipart/form-data" },
-    })
+    await Axios.patch(
+      `${backendUrl}/api/properties/${property._id}`,
+      form,
+      setHead(true)
+    )
   ).data;
   return resp;
 };
