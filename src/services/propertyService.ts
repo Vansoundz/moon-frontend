@@ -69,7 +69,11 @@ const like = async ({ id }: { id?: string }) => {
   try {
     if (!id) return null;
     let resp = (
-      await Axios.patch(`${backendUrl}/api/properties/${id}/like`, setHead())
+      await Axios.patch(
+        `${backendUrl}/api/properties/${id}/like`,
+        {},
+        setHead()
+      )
     ).data;
     return resp;
   } catch (error) {

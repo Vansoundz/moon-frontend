@@ -10,12 +10,9 @@ import Loading from "./components/layout/Loading";
 import { ToastContainer } from "react-toastify";
 
 const App = () => {
-  const { data, error } = useQuery("get user", getUser);
+  const { data, error, isLoading } = useQuery("get user", getUser);
 
-  const {
-    dispatch,
-    auth: { loading },
-  } = useContext(authContext);
+  const { dispatch } = useContext(authContext);
 
   useEffect(() => {
     if (data && data.user) {
@@ -30,7 +27,7 @@ const App = () => {
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <div className="app">
