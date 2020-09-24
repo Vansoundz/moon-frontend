@@ -20,11 +20,9 @@ const App = () => {
   useEffect(() => {
     if (data && data.user) {
       dispatch({ type: `LOGIN`, payload: data.user });
-    }
-    if (data && data.errors) {
+    } else if (data && data.errors) {
       dispatch({ type: `STOP` });
-    }
-    if (error) {
+    } else {
       dispatch({ type: `STOP` });
     }
     // eslint-disable-next-line
